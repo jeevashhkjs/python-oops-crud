@@ -1,7 +1,7 @@
 from flask import Flask,request,jsonify
 from pymongo import MongoClient
 from flask_jwt_extended import create_access_token
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 import hashlib,json,datetime
 
 class db_config:
@@ -46,11 +46,23 @@ class movie_management(login_signup):
 
     def movies(self):
         self.movies_collection.insert_one(self.user_data)
-        return "Movie successfully added"
+        return "jasm"
 
     def likes(self):
         self.likes_collection.insert_one(self.datum)
         return "successfully like"
+
+    def show_movies(self):
+        return json.dumps(self.movies_collection.find({},{"_id":0}))
+    def show_movies_single(self,id):
+        return json.dumps(self.movies_collection.find_many({"user_id":id},{"_id":0}))
+
+    def show_likes_single(self,id):
+        return json.dumps(self.likes_collection.find_many({"user_id":id},{"_id":0}))
+
+    def show_likes(self):
+        return json.dumps(self.likes_collection.find({},{"_id":0}))
+
 
 
 
