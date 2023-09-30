@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 import hashlib,json,datetime
+from flask.ext.uuid import FlaskUUID
 
 class db_config:
     def __init__(self,dbname):
